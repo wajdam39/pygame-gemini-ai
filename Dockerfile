@@ -18,13 +18,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Kopiujemy kod gry
 COPY . .
 
-# NOWA, BEZPIECZNIEJSZA METODA TWORZENIA SKRYPTU STARTOWEGO
+# POPRAWIONY SKRYPT STARTOWY: Zapewnia poprawne przypisanie portu i podtrzymanie kontenera
 RUN printf '#!/bin/bash\n\
 Xvfb :1 -screen 0 1280x720x24 &\n\
 export DISPLAY=:1\n\
 fluxbox &\n\
-x11vnc -display :1 -nopw -listen localhost -xkb &\n\
+sleep 2\n\
+x11vnc -display :1 -nopw -forever -listen localhost -xkb &\n\
+sleep 2\n\
 /usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen ${PORT:-8080} &\n\
+sleep 2\n\
 python gra_ai.py\n' > /app/start.sh && chmod +x /app/start.sh
 
 CMD ["/app/start.sh"]
