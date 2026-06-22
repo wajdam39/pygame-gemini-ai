@@ -24,11 +24,10 @@ Xvfb :1 -screen 0 1280x720x24 &\n\
 export DISPLAY=:1\n\
 fluxbox &\n\
 x11vnc -display :1 -nopw -listen localhost -xkb &\n\
-/usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 8080 &\n\
+/usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen ${PORT:-8080} &
 python gra_ai.py\n\
 ' > /app/start.sh && chmod +x /app/start.sh
 
 # Gra będzie dostępna w przeglądarce na porcie 8080
-EXPOSE 8080
 
 CMD ["/app/start.sh"]
