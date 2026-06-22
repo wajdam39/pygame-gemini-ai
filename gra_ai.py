@@ -9,12 +9,16 @@ from google.genai import types
 load_dotenv()  # Ta funkcja szuka pliku .env i wczytuje z niego dane
 
 # Pobieramy klucz bezpośrednio z pamięci systemu
+# Pobieramy klucz z pliku .env (lokalnie) lub ze zmiennych środowiska (Railway)
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client = None
-if GEMINI_API_KEY != "TUTAJ_WKLEJ_SWÓJ_KLUCZ_API":
+# Sprawdzamy czy klucz istnieje i nie jest pustym stringiem
+if GEMINI_API_KEY and GEMINI_API_KEY.strip():
     client = genai.Client(api_key=GEMINI_API_KEY)
-
+    print("✅ Klient Gemini zainicjalizowany pomyślnie.")
+else:
+    print("⚠️ UWAGA: Brak klucza GEMINI_API_KEY. Gra uruchomi się bez AI!")
 # Inicjalizacja Pygame
 pygame.init()
 
