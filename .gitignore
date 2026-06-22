@@ -1,0 +1,11 @@
+# Ignoruj pliki pamięci podręcznej Pythona
+__pycache__/
+*.pyc
+
+# Ignoruj pliki konfiguracyjne systemowe/edytorów
+.vscode/
+.idea/
+.DS_Store
+
+# Jeśli trzymasz klucz API w osobnym pliku konfiguracyjnym (np. .env), też go zablokuj:
+.env
